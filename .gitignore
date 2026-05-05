@@ -1,0 +1,38 @@
+# Environment variables
+.env
+.env.local
+*.env
+
+# API Keys & Secrets
+secrets/
+credentials/
+*.key
+*.pem
+
+# n8n local data
+.n8n/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Node
+node_modules/
+npm-debug.log
