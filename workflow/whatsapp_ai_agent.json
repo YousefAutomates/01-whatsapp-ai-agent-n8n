@@ -1,23 +1,19 @@
 {
-  "meta": {
-    "instanceId": "whatsapp-ai-agent-v1",
-    "templateCredsSetupCompleted": true
-  },
   "nodes": [
     {
       "parameters": {
         "content": "## 🤖 WhatsApp AI Agent\n**Author:** Yousef ElSherbiny\n**Services:** [yousefautomates.pages.dev](https://yousefautomates.pages.dev/)\n**Tutorial:** [Watch on YouTube](https://youtu.be/4bQXpGNTSF4)\n\n**Flow:**\nWhatsApp → Security Check → Route by Type\n→ (Text / Voice / Image) → AI Agent → Reply",
-        "height": 220,
+        "height": 204,
         "width": 380,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -1100,
-        -200
+        448,
+        208
       ],
-      "id": "sticky-project-info",
+      "id": "bd2bd74d-0e9f-44d2-890e-294d09eea0b8",
       "name": "📌 Project Info"
     },
     {
@@ -30,58 +26,58 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -780,
-        -160
+        880,
+        240
       ],
-      "id": "sticky-security",
+      "id": "2aee6a0a-48f5-482b-a277-93250808f6b0",
       "name": "🔒 Security Note"
     },
     {
       "parameters": {
         "content": "## 🔀 Message Router\n**3 branches:**\n- `text` → direct to Agent\n- `voice` → Whisper → Agent\n- `image` → Vision → Agent",
-        "height": 140,
+        "height": 156,
         "width": 260,
         "color": 5
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -380,
-        -160
+        1200,
+        224
       ],
-      "id": "sticky-routing",
+      "id": "77ac40cd-d315-4a18-a17f-c06ff79d5095",
       "name": "🔀 Routing Note"
     },
     {
       "parameters": {
         "content": "## 🎤 Voice Branch\n`Download → HTTP Get → Groq Whisper`\nConverts voice note to text.\nGroq is faster & cheaper than OpenAI.",
-        "height": 140,
-        "width": 600,
+        "height": 268,
+        "width": 808,
         "color": 6
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -280,
-        260
+        1456,
+        384
       ],
-      "id": "sticky-voice",
+      "id": "9e0a3846-bd58-4b22-b259-a15f1bb03933",
       "name": "🎤 Voice Note"
     },
     {
       "parameters": {
         "content": "## 🖼️ Image Branch\n`Download → HTTP Get → Vision Model`\nAnalyzes image & returns description.\nModel: GPT-4o-mini (cost-effective).",
-        "height": 140,
-        "width": 600,
+        "height": 284,
+        "width": 808,
         "color": 4
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -280,
-        520
+        1456,
+        672
       ],
-      "id": "sticky-image",
+      "id": "fd66b993-2135-4ad5-902c-e708ddd4cbe6",
       "name": "🖼️ Image Note"
     },
     {
@@ -94,27 +90,11 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        680,
-        -160
+        2400,
+        160
       ],
-      "id": "sticky-agent",
+      "id": "bbffa67b-866f-45b9-926f-fc2622a8fe91",
       "name": "🧠 Agent Note"
-    },
-    {
-      "parameters": {
-        "content": "## 🛠️ Agent Tools\n**Search:** SerpAPI → real-time Google\n**Email:** Gmail OAuth2\n**Contacts:** Google Sheets lookup\n\n⚡ Agent decides which tool to use\nbased on user request.",
-        "height": 160,
-        "width": 280,
-        "color": 5
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        680,
-        300
-      ],
-      "id": "sticky-tools",
-      "name": "🛠️ Tools Note"
     },
     {
       "parameters": {
@@ -126,18 +106,12 @@
       "type": "n8n-nodes-base.whatsAppTrigger",
       "typeVersion": 1,
       "position": [
-        -960,
-        200
+        768,
+        400
       ],
-      "id": "whatsapp-trigger",
+      "id": "5d759622-9e3d-4230-9842-160bd02e4a53",
       "name": "WhatsApp Trigger",
-      "webhookId": "REPLACE_WITH_YOUR_WEBHOOK_ID",
-      "credentials": {
-        "whatsAppTriggerApi": {
-          "id": "REPLACE_WITH_CREDENTIAL_ID",
-          "name": "WhatsApp OAuth account"
-        }
-      }
+      "webhookId": "REPLACE_WITH_YOUR_WEBHOOK_ID"
     },
     {
       "parameters": {
@@ -167,10 +141,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -760,
-        200
+        976,
+        400
       ],
-      "id": "security-if",
+      "id": "7f1e7c66-590a-46b6-b406-d37c9aa01877",
       "name": "🔒 Security Check"
     },
     {
@@ -178,10 +152,10 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        -760,
-        380
+        976,
+        624
       ],
-      "id": "no-op-unauthorized",
+      "id": "84a33abe-fd49-4590-ae9a-d5fe4bdd4b0e",
       "name": "⛔ Unauthorized"
     },
     {
@@ -271,10 +245,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
       "position": [
-        -520,
-        200
+        1216,
+        400
       ],
-      "id": "message-router",
+      "id": "77a39c3c-48b1-4240-bfb4-a24d44bbf199",
       "name": "🔀 Message Router"
     },
     {
@@ -294,10 +268,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -280,
-        80
+        1776,
+        144
       ],
-      "id": "set-text",
+      "id": "600a87a4-e643-4066-abea-24d272386deb",
       "name": "📝 Set Text Message"
     },
     {
@@ -309,17 +283,12 @@
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1.1,
       "position": [
-        -280,
-        320
+        1456,
+        496
       ],
-      "id": "get-audio-url",
+      "id": "94ead605-5d85-4977-bcf4-34e31658f376",
       "name": "🎤 Get Audio URL",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "REPLACE_WITH_CREDENTIAL_ID",
-          "name": "WhatsApp account"
-        }
-      }
+      "webhookId": "ecccb482-f193-4de8-8131-be0b0ba16c98"
     },
     {
       "parameters": {
@@ -331,20 +300,14 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        -60,
-        320
+        1664,
+        496
       ],
-      "id": "download-audio",
+      "id": "b5b2265a-de2c-46bc-b75c-427579e60680",
       "name": "⬇️ Download Audio",
       "retryOnFail": true,
       "maxTries": 3,
-      "waitBetweenTries": 5000,
-      "credentials": {
-        "httpBearerAuth": {
-          "id": "REPLACE_WITH_CREDENTIAL_ID",
-          "name": "WhatsApp Bearer Token"
-        }
-      }
+      "waitBetweenTries": 5000
     },
     {
       "parameters": {
@@ -372,15 +335,15 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        160,
-        320
+        1888,
+        496
       ],
-      "id": "groq-whisper",
+      "id": "c42c86aa-b560-4755-8c79-43c8f3ab1bfa",
       "name": "🎙️ Groq Whisper STT",
       "credentials": {
         "httpBearerAuth": {
-          "id": "REPLACE_WITH_CREDENTIAL_ID",
-          "name": "Groq API Key"
+          "id": "TZmKhMXMQH7T1c6l",
+          "name": "WA bearear"
         }
       }
     },
@@ -401,10 +364,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        380,
-        320
+        2096,
+        496
       ],
-      "id": "set-voice-text",
+      "id": "af470748-1419-4a0c-9e68-49040e5b58cd",
       "name": "📝 Set Voice→Text"
     },
     {
@@ -416,17 +379,12 @@
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1.1,
       "position": [
-        -280,
-        580
+        1456,
+        784
       ],
-      "id": "get-image-url",
+      "id": "daa7eec0-9def-4879-929c-a61646c38476",
       "name": "🖼️ Get Image URL",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "REPLACE_WITH_CREDENTIAL_ID",
-          "name": "WhatsApp account"
-        }
-      }
+      "webhookId": "75d9d093-e731-49bb-9295-5ddbf327f4f3"
     },
     {
       "parameters": {
@@ -438,20 +396,14 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        -60,
-        580
+        1664,
+        784
       ],
-      "id": "download-image",
+      "id": "a7031895-5010-4b8a-be7b-f9ec7b3789fc",
       "name": "⬇️ Download Image",
       "retryOnFail": true,
       "maxTries": 3,
-      "waitBetweenTries": 5000,
-      "credentials": {
-        "httpBearerAuth": {
-          "id": "REPLACE_WITH_CREDENTIAL_ID",
-          "name": "WhatsApp Bearer Token"
-        }
-      }
+      "waitBetweenTries": 5000
     },
     {
       "parameters": {
@@ -470,17 +422,11 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 2.1,
       "position": [
-        160,
-        580
+        1888,
+        784
       ],
-      "id": "analyze-image",
-      "name": "👁️ Analyze Image",
-      "credentials": {
-        "openAiApi": {
-          "id": "REPLACE_WITH_CREDENTIAL_ID",
-          "name": "OpenAI API"
-        }
-      }
+      "id": "d7833498-517c-47a9-bdfc-64ceac89352f",
+      "name": "👁️ Analyze Image"
     },
     {
       "parameters": {
@@ -499,10 +445,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        380,
-        580
+        2112,
+        784
       ],
-      "id": "set-image-text",
+      "id": "493068d8-d39d-4781-97cc-c13b88b427e6",
       "name": "📝 Set Image Description"
     },
     {
@@ -516,10 +462,10 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        700,
-        200
+        2432,
+        400
       ],
-      "id": "ai-agent",
+      "id": "d42c5cc9-9507-4681-afd3-45acb4e1d03b",
       "name": "🧠 AI Agent"
     },
     {
@@ -529,20 +475,21 @@
           "mode": "list",
           "value": "gpt-4o-mini"
         },
+        "builtInTools": {},
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        620,
-        420
+        2352,
+        624
       ],
-      "id": "llm-openai",
+      "id": "d3c1422d-0fb7-4c20-a040-e32874217328",
       "name": "🤖 LLM (GPT-4o-mini)",
       "credentials": {
         "openAiApi": {
-          "id": "REPLACE_WITH_CREDENTIAL_ID",
-          "name": "OpenAI API"
+          "id": "YShXMKvUwjkLxa25",
+          "name": "n8n free OpenAI API credits"
         }
       }
     },
@@ -555,10 +502,10 @@
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.3,
       "position": [
-        780,
-        420
+        2512,
+        624
       ],
-      "id": "memory",
+      "id": "a0ae6714-2e07-495f-8e33-e31d09b7b7d4",
       "name": "🧠 Conversation Memory"
     },
     {
@@ -568,14 +515,14 @@
       "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
       "typeVersion": 1,
       "position": [
-        940,
-        360
+        2800,
+        704
       ],
-      "id": "tool-serpapi",
+      "id": "d9752eb8-0fab-47a5-aad0-3ce3d9220b89",
       "name": "🔍 SerpAPI Search",
       "credentials": {
         "serpApi": {
-          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "id": "7Hhz3W7MrDnam6VW",
           "name": "SerpAPI account"
         }
       }
@@ -599,17 +546,11 @@
       "type": "n8n-nodes-base.googleSheetsTool",
       "typeVersion": 4.7,
       "position": [
-        940,
-        480
+        2688,
+        800
       ],
-      "id": "tool-sheets",
-      "name": "📊 Google Sheets Lookup",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "REPLACE_WITH_CREDENTIAL_ID",
-          "name": "Google Sheets OAuth2"
-        }
-      }
+      "id": "b8ed6bf5-e60d-47e6-ab35-75ad45da05d7",
+      "name": "📊 Google Sheets Lookup"
     },
     {
       "parameters": {
@@ -623,17 +564,12 @@
       "type": "n8n-nodes-base.gmailTool",
       "typeVersion": 2.2,
       "position": [
-        940,
-        600
+        2624,
+        944
       ],
-      "id": "tool-gmail",
+      "id": "4d04df6c-d81c-42f8-9499-f2b804140367",
       "name": "📧 Gmail Send",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "REPLACE_WITH_CREDENTIAL_ID",
-          "name": "Gmail OAuth2"
-        }
-      }
+      "webhookId": "d3f48e08-90d2-45b3-bbe2-a72a4a225773"
     },
     {
       "parameters": {
@@ -646,17 +582,12 @@
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1.1,
       "position": [
-        980,
-        200
+        2704,
+        400
       ],
-      "id": "send-reply",
+      "id": "09939202-9ee9-421a-bc7e-c686b7f086d4",
       "name": "📤 Send WhatsApp Reply",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "REPLACE_WITH_CREDENTIAL_ID",
-          "name": "WhatsApp account"
-        }
-      }
+      "webhookId": "5e0cb616-88e8-45ea-ac57-ae1ad89bd962"
     }
   ],
   "connections": {
@@ -881,10 +812,7 @@
     }
   },
   "pinData": {},
-  "settings": {
-    "executionOrder": "v1",
-    "saveManualExecutions": true,
-    "callerPolicy": "workflowsFromSameOwner",
-    "errorWorkflow": ""
+  "meta": {
+    "instanceId": "c373301d3a3102ac8fe7a1e37334930d215639ab03d320e702696229ca1d342f"
   }
 }
