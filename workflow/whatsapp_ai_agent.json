@@ -1,0 +1,15 @@
+{
+  "_comment": "Import this file into n8n: Settings → Import Workflow",
+  "_tutorial": "https://youtu.be/4bQXpGNTSF4",
+  "_author": "Yousef ElSherbiny",
+  "_website": "https://yousefautomates.pages.dev/",
+  "_project": "01 - WhatsApp AI Agent",
+  
+  "TODO": "Paste your n8n workflow JSON here",
+  "HOW_TO_EXPORT": [
+    "1. Open your workflow in n8n",
+    "2. Click the 3-dot menu (top right)",
+    "3. Select 'Download' or 'Export'",
+    "4. Replace this file content with the exported JSON"
+  ]
+}
