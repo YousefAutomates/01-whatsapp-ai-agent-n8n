@@ -1,15 +1,890 @@
 {
-  "_comment": "Import this file into n8n: Settings → Import Workflow",
-  "_tutorial": "https://youtu.be/4bQXpGNTSF4",
-  "_author": "Yousef ElSherbiny",
-  "_website": "https://yousefautomates.pages.dev/",
-  "_project": "01 - WhatsApp AI Agent",
-  
-  "TODO": "Paste your n8n workflow JSON here",
-  "HOW_TO_EXPORT": [
-    "1. Open your workflow in n8n",
-    "2. Click the 3-dot menu (top right)",
-    "3. Select 'Download' or 'Export'",
-    "4. Replace this file content with the exported JSON"
-  ]
+  "meta": {
+    "instanceId": "whatsapp-ai-agent-v1",
+    "templateCredsSetupCompleted": true
+  },
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 🤖 WhatsApp AI Agent\n**Author:** Yousef ElSherbiny\n**Services:** [yousefautomates.pages.dev](https://yousefautomates.pages.dev/)\n**Tutorial:** [Watch on YouTube](https://youtu.be/4bQXpGNTSF4)\n\n**Flow:**\nWhatsApp → Security Check → Route by Type\n→ (Text / Voice / Image) → AI Agent → Reply",
+        "height": 220,
+        "width": 380,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1100,
+        -200
+      ],
+      "id": "sticky-project-info",
+      "name": "📌 Project Info"
+    },
+    {
+      "parameters": {
+        "content": "## 🔒 Security Layer\nAllows only whitelisted phone numbers.\nSet your number in n8n **Variables**:\n`phone = 20xxxxxxxxxx`",
+        "height": 140,
+        "width": 280,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -780,
+        -160
+      ],
+      "id": "sticky-security",
+      "name": "🔒 Security Note"
+    },
+    {
+      "parameters": {
+        "content": "## 🔀 Message Router\n**3 branches:**\n- `text` → direct to Agent\n- `voice` → Whisper → Agent\n- `image` → Vision → Agent",
+        "height": 140,
+        "width": 260,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -380,
+        -160
+      ],
+      "id": "sticky-routing",
+      "name": "🔀 Routing Note"
+    },
+    {
+      "parameters": {
+        "content": "## 🎤 Voice Branch\n`Download → HTTP Get → Groq Whisper`\nConverts voice note to text.\nGroq is faster & cheaper than OpenAI.",
+        "height": 140,
+        "width": 600,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -280,
+        260
+      ],
+      "id": "sticky-voice",
+      "name": "🎤 Voice Note"
+    },
+    {
+      "parameters": {
+        "content": "## 🖼️ Image Branch\n`Download → HTTP Get → Vision Model`\nAnalyzes image & returns description.\nModel: GPT-4o-mini (cost-effective).",
+        "height": 140,
+        "width": 600,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -280,
+        520
+      ],
+      "id": "sticky-image",
+      "name": "🖼️ Image Note"
+    },
+    {
+      "parameters": {
+        "content": "## 🧠 AI Agent\n**Tools available:**\n- 🔍 SerpAPI (Google Search)\n- 📧 Gmail (Send Emails)\n- 📊 Google Sheets (Contacts)\n\n**Memory:** per WhatsApp number\n**Model:** GPT-5-mini",
+        "height": 200,
+        "width": 280,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        680,
+        -160
+      ],
+      "id": "sticky-agent",
+      "name": "🧠 Agent Note"
+    },
+    {
+      "parameters": {
+        "content": "## 🛠️ Agent Tools\n**Search:** SerpAPI → real-time Google\n**Email:** Gmail OAuth2\n**Contacts:** Google Sheets lookup\n\n⚡ Agent decides which tool to use\nbased on user request.",
+        "height": 160,
+        "width": 280,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        680,
+        300
+      ],
+      "id": "sticky-tools",
+      "name": "🛠️ Tools Note"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [
+        -960,
+        200
+      ],
+      "id": "whatsapp-trigger",
+      "name": "WhatsApp Trigger",
+      "webhookId": "REPLACE_WITH_YOUR_WEBHOOK_ID",
+      "credentials": {
+        "whatsAppTriggerApi": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "WhatsApp OAuth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "security-check-001",
+              "leftValue": "={{ $json.messages[0].from }}",
+              "rightValue": "={{ $vars.phone }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -760,
+        200
+      ],
+      "id": "security-if",
+      "name": "🔒 Security Check"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -760,
+        380
+      ],
+      "id": "no-op-unauthorized",
+      "name": "⛔ Unauthorized"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.messages[0].text.body }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "id": "route-text"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "text"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "route-voice",
+                    "leftValue": "={{ $json.messages[0].audio }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "voice"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "route-image",
+                    "leftValue": "={{ $json.messages[0].image }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "image"
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -520,
+        200
+      ],
+      "id": "message-router",
+      "name": "🔀 Message Router"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "set-text-msg",
+              "name": "message",
+              "value": "={{ $json.messages[0].text.body }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -280,
+        80
+      ],
+      "id": "set-text",
+      "name": "📝 Set Text Message"
+    },
+    {
+      "parameters": {
+        "resource": "media",
+        "operation": "mediaUrlGet",
+        "mediaGetId": "={{ $json.messages[0].audio.id }}"
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        -280,
+        320
+      ],
+      "id": "get-audio-url",
+      "name": "🎤 Get Audio URL",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "WhatsApp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpBearerAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -60,
+        320
+      ],
+      "id": "download-audio",
+      "name": "⬇️ Download Audio",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "WhatsApp Bearer Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.groq.com/openai/v1/audio/transcriptions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpBearerAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "whisper-large-v3-turbo"
+            },
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        160,
+        320
+      ],
+      "id": "groq-whisper",
+      "name": "🎙️ Groq Whisper STT",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "Groq API Key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "set-voice-msg",
+              "name": "message",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        380,
+        320
+      ],
+      "id": "set-voice-text",
+      "name": "📝 Set Voice→Text"
+    },
+    {
+      "parameters": {
+        "resource": "media",
+        "operation": "mediaUrlGet",
+        "mediaGetId": "={{ $json.messages[0].image.id }}"
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        -280,
+        580
+      ],
+      "id": "get-image-url",
+      "name": "🖼️ Get Image URL",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "WhatsApp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpBearerAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -60,
+        580
+      ],
+      "id": "download-image",
+      "name": "⬇️ Download Image",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "WhatsApp Bearer Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "text": "=Describe this image in detail. Reply in Arabic.\n\nUser question: {{ $('WhatsApp Trigger').item.json.messages[0].image.caption || 'No question provided.' }}",
+        "inputType": "base64",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        160,
+        580
+      ],
+      "id": "analyze-image",
+      "name": "👁️ Analyze Image",
+      "credentials": {
+        "openAiApi": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "OpenAI API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "set-image-msg",
+              "name": "message",
+              "value": "={{ $json['0'].content[0].text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        380,
+        580
+      ],
+      "id": "set-image-text",
+      "name": "📝 Set Image Description"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message }}",
+        "options": {
+          "systemMessage": "=You are a fast-acting WhatsApp AI Assistant.\nRespond in the same language the user writes in.\n\n## CORE RULE — ACT IMMEDIATELY\nNever ask permission. Execute tasks right away.\n- Search request → use SerpAPI immediately\n- Send email → check Google Sheets first, then Gmail\n- Image question → answer from the description provided\n\n## TOOLS\n1. SerpAPI: real-time Google Search (prices, news, specs)\n2. Google Sheets: look up contact emails by name\n3. Gmail: send emails after finding contact in Sheets\n\n## RULES\n- Same language as user (Arabic → Arabic, English → English)\n- Never fabricate email addresses\n- Never ask 'هل تريد؟' — just do it\n- Multi-step tasks: complete all steps automatically\n\n## SERVICES\nProfessional automation services by Yousef ElSherbiny\nhttps://yousefautomates.pages.dev/\n\n_If image was sent, user question:\n{{ $('WhatsApp Trigger').item.json.messages[0].image.caption }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        700,
+        200
+      ],
+      "id": "ai-agent",
+      "name": "🧠 AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        620,
+        420
+      ],
+      "id": "llm-openai",
+      "name": "🤖 LLM (GPT-4o-mini)",
+      "credentials": {
+        "openAiApi": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "OpenAI API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        780,
+        420
+      ],
+      "id": "memory",
+      "name": "🧠 Conversation Memory"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
+      "typeVersion": 1,
+      "position": [
+        940,
+        360
+      ],
+      "id": "tool-serpapi",
+      "name": "🔍 SerpAPI Search",
+      "credentials": {
+        "serpApi": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "SerpAPI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Look up a contact's email address by their name before sending any email.",
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_SPREADSHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Contacts",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        940,
+        480
+      ],
+      "id": "tool-sheets",
+      "name": "📊 Google Sheets Lookup",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "Google Sheets OAuth2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $fromAI('To', 'recipient email address', 'string') }}",
+        "subject": "={{ $fromAI('Subject', 'email subject line', 'string') }}",
+        "message": "={{ $fromAI('Message', 'email body content', 'string') }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        940,
+        600
+      ],
+      "id": "tool-gmail",
+      "name": "📧 Gmail Send",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "Gmail OAuth2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "REPLACE_WITH_PHONE_NUMBER_ID",
+        "recipientPhoneNumber": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}",
+        "textBody": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        980,
+        200
+      ],
+      "id": "send-reply",
+      "name": "📤 Send WhatsApp Reply",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "WhatsApp account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "WhatsApp Trigger": {
+      "main": [
+        [
+          {
+            "node": "🔒 Security Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🔒 Security Check": {
+      "main": [
+        [
+          {
+            "node": "🔀 Message Router",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "⛔ Unauthorized",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🔀 Message Router": {
+      "main": [
+        [
+          {
+            "node": "📝 Set Text Message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "🎤 Get Audio URL",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "🖼️ Get Image URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📝 Set Text Message": {
+      "main": [
+        [
+          {
+            "node": "🧠 AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🎤 Get Audio URL": {
+      "main": [
+        [
+          {
+            "node": "⬇️ Download Audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "⬇️ Download Audio": {
+      "main": [
+        [
+          {
+            "node": "🎙️ Groq Whisper STT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🎙️ Groq Whisper STT": {
+      "main": [
+        [
+          {
+            "node": "📝 Set Voice→Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📝 Set Voice→Text": {
+      "main": [
+        [
+          {
+            "node": "🧠 AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🖼️ Get Image URL": {
+      "main": [
+        [
+          {
+            "node": "⬇️ Download Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "⬇️ Download Image": {
+      "main": [
+        [
+          {
+            "node": "👁️ Analyze Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "👁️ Analyze Image": {
+      "main": [
+        [
+          {
+            "node": "📝 Set Image Description",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📝 Set Image Description": {
+      "main": [
+        [
+          {
+            "node": "🧠 AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🧠 AI Agent": {
+      "main": [
+        [
+          {
+            "node": "📤 Send WhatsApp Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🤖 LLM (GPT-4o-mini)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "🧠 AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🧠 Conversation Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "🧠 AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🔍 SerpAPI Search": {
+      "ai_tool": [
+        [
+          {
+            "node": "🧠 AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📊 Google Sheets Lookup": {
+      "ai_tool": [
+        [
+          {
+            "node": "🧠 AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📧 Gmail Send": {
+      "ai_tool": [
+        [
+          {
+            "node": "🧠 AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": ""
+  }
 }
