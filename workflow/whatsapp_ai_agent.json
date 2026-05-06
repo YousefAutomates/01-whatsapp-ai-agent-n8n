@@ -2,102 +2,6 @@
   "nodes": [
     {
       "parameters": {
-        "content": "## 🤖 WhatsApp AI Agent\n**Author:** Yousef ElSherbiny\n**Services:** [yousefautomates.pages.dev](https://yousefautomates.pages.dev/)\n**Tutorial:** [Watch on YouTube](https://youtu.be/4bQXpGNTSF4)\n\n**Flow:**\nWhatsApp → Security Check → Route by Type\n→ (Text / Voice / Image) → AI Agent → Reply",
-        "height": 204,
-        "width": 380,
-        "color": 7
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        448,
-        208
-      ],
-      "id": "bd2bd74d-0e9f-44d2-890e-294d09eea0b8",
-      "name": "📌 Project Info"
-    },
-    {
-      "parameters": {
-        "content": "## 🔒 Security Layer\nAllows only whitelisted phone numbers.\nSet your number in n8n **Variables**:\n`phone = 20xxxxxxxxxx`",
-        "height": 140,
-        "width": 280,
-        "color": 3
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        880,
-        240
-      ],
-      "id": "2aee6a0a-48f5-482b-a277-93250808f6b0",
-      "name": "🔒 Security Note"
-    },
-    {
-      "parameters": {
-        "content": "## 🔀 Message Router\n**3 branches:**\n- `text` → direct to Agent\n- `voice` → Whisper → Agent\n- `image` → Vision → Agent",
-        "height": 156,
-        "width": 260,
-        "color": 5
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        1200,
-        224
-      ],
-      "id": "77ac40cd-d315-4a18-a17f-c06ff79d5095",
-      "name": "🔀 Routing Note"
-    },
-    {
-      "parameters": {
-        "content": "## 🎤 Voice Branch\n`Download → HTTP Get → Groq Whisper`\nConverts voice note to text.\nGroq is faster & cheaper than OpenAI.",
-        "height": 268,
-        "width": 808,
-        "color": 6
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        1456,
-        384
-      ],
-      "id": "9e0a3846-bd58-4b22-b259-a15f1bb03933",
-      "name": "🎤 Voice Note"
-    },
-    {
-      "parameters": {
-        "content": "## 🖼️ Image Branch\n`Download → HTTP Get → Vision Model`\nAnalyzes image & returns description.\nModel: GPT-4o-mini (cost-effective).",
-        "height": 284,
-        "width": 808,
-        "color": 4
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        1456,
-        672
-      ],
-      "id": "fd66b993-2135-4ad5-902c-e708ddd4cbe6",
-      "name": "🖼️ Image Note"
-    },
-    {
-      "parameters": {
-        "content": "## 🧠 AI Agent\n**Tools available:**\n- 🔍 SerpAPI (Google Search)\n- 📧 Gmail (Send Emails)\n- 📊 Google Sheets (Contacts)\n\n**Memory:** per WhatsApp number\n**Model:** GPT-5-mini",
-        "height": 200,
-        "width": 280,
-        "color": 7
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        2400,
-        160
-      ],
-      "id": "bbffa67b-866f-45b9-926f-fc2622a8fe91",
-      "name": "🧠 Agent Note"
-    },
-    {
-      "parameters": {
         "updates": [
           "messages"
         ],
@@ -106,63 +10,18 @@
       "type": "n8n-nodes-base.whatsAppTrigger",
       "typeVersion": 1,
       "position": [
-        768,
-        400
+        -960,
+        208
       ],
-      "id": "5d759622-9e3d-4230-9842-160bd02e4a53",
+      "id": "6a3a7d43-739d-4e2e-a729-6a70d4dd0d11",
       "name": "WhatsApp Trigger",
-      "webhookId": "REPLACE_WITH_YOUR_WEBHOOK_ID",
+      "webhookId": "85f589af-7a55-4341-aad4-905dcf67fb87",
       "credentials": {
         "whatsAppTriggerApi": {
           "id": "4x1Q5Xmz2rgQBeKs",
           "name": "WhatsApp OAuth account"
         }
       }
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "loose",
-            "version": 3
-          },
-          "conditions": [
-            {
-              "id": "security-check-001",
-              "leftValue": "={{ $json.messages[0].from }}",
-              "rightValue": "={{ $vars.phone }}",
-              "operator": {
-                "type": "string",
-                "operation": "equals"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "looseTypeValidation": true,
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.3,
-      "position": [
-        976,
-        400
-      ],
-      "id": "7f1e7c66-590a-46b6-b406-d37c9aa01877",
-      "name": "🔒 Security Check"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        976,
-        624
-      ],
-      "id": "84a33abe-fd49-4590-ae9a-d5fe4bdd4b0e",
-      "name": "⛔ Unauthorized"
     },
     {
       "parameters": {
@@ -185,7 +44,7 @@
                       "operation": "exists",
                       "singleValue": true
                     },
-                    "id": "route-text"
+                    "id": "00aa1a12-64d0-4436-933c-dcc83a3a4eb8"
                   }
                 ],
                 "combinator": "and"
@@ -203,7 +62,7 @@
                 },
                 "conditions": [
                   {
-                    "id": "route-voice",
+                    "id": "53d5a502-e76d-4d51-85d4-c0dc54b25abd",
                     "leftValue": "={{ $json.messages[0].audio }}",
                     "rightValue": "",
                     "operator": {
@@ -228,7 +87,7 @@
                 },
                 "conditions": [
                   {
-                    "id": "route-image",
+                    "id": "90fbc1ff-fa1c-491f-a0e0-82c7b2318ff4",
                     "leftValue": "={{ $json.messages[0].image }}",
                     "rightValue": "",
                     "operator": {
@@ -242,6 +101,29 @@
               },
               "renameOutput": true,
               "outputKey": "image"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "83ecda86-0247-4699-89c2-162922d93d09",
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
             }
           ]
         },
@@ -251,34 +133,11 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
       "position": [
-        1216,
-        400
+        -528,
+        176
       ],
-      "id": "77a39c3c-48b1-4240-bfb4-a24d44bbf199",
-      "name": "🔀 Message Router"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "set-text-msg",
-              "name": "message",
-              "value": "={{ $json.messages[0].text.body }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        1776,
-        144
-      ],
-      "id": "600a87a4-e643-4066-abea-24d272386deb",
-      "name": "📝 Set Text Message"
+      "id": "e3d97ea6-61ea-4769-baac-b27d809d5350",
+      "name": "Switch"
     },
     {
       "parameters": {
@@ -289,12 +148,18 @@
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1.1,
       "position": [
-        1456,
-        496
+        -224,
+        288
       ],
-      "id": "94ead605-5d85-4977-bcf4-34e31658f376",
-      "name": "🎤 Get Audio URL",
-      "webhookId": "ecccb482-f193-4de8-8131-be0b0ba16c98"
+      "id": "e7fc621a-cefa-42d4-936a-1ce32073ecf1",
+      "name": "Download media",
+      "webhookId": "1824638d-99b0-4cc8-9789-059265ba11e4",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "x45iI27SgqYIc0dv",
+          "name": "WhatsApp account"
+        }
+      }
     },
     {
       "parameters": {
@@ -306,14 +171,42 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        1664,
-        496
+        -48,
+        288
       ],
-      "id": "b5b2265a-de2c-46bc-b75c-427579e60680",
-      "name": "⬇️ Download Audio",
+      "id": "e2dd26f1-ca46-43f3-9cfb-3e671c74ff13",
+      "name": "HTTP Request",
       "retryOnFail": true,
-      "maxTries": 3,
-      "waitBetweenTries": 5000
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "N6y28QUu9FDLK4ae",
+          "name": "Bearer Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "1064834993383405",
+        "recipientPhoneNumber": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}",
+        "textBody": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        1088,
+        144
+      ],
+      "id": "c81bc43c-aa01-4c06-b557-a251ce76df5d",
+      "name": "Send message",
+      "webhookId": "f186eed5-4e4f-4756-820a-f428e10c6e60",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "x45iI27SgqYIc0dv",
+          "name": "WhatsApp account"
+        }
+      }
     },
     {
       "parameters": {
@@ -321,6 +214,10 @@
         "url": "https://api.groq.com/openai/v1/audio/transcriptions",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": []
+        },
         "sendBody": true,
         "contentType": "multipart-form-data",
         "bodyParameters": {
@@ -341,40 +238,17 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        1888,
-        496
+        144,
+        288
       ],
-      "id": "c42c86aa-b560-4755-8c79-43c8f3ab1bfa",
-      "name": "🎙️ Groq Whisper STT",
+      "id": "56b9db25-af4a-4672-958e-991df555d6cb",
+      "name": "HTTP Request2",
       "credentials": {
         "httpBearerAuth": {
-          "id": "TZmKhMXMQH7T1c6l",
-          "name": "WA bearear"
+          "id": "qSt7Jph93qpXfjUl",
+          "name": "groq"
         }
       }
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "set-voice-msg",
-              "name": "message",
-              "value": "={{ $json.text }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        2096,
-        496
-      ],
-      "id": "af470748-1419-4a0c-9e68-49040e5b58cd",
-      "name": "📝 Set Voice→Text"
     },
     {
       "parameters": {
@@ -385,12 +259,18 @@
       "type": "n8n-nodes-base.whatsApp",
       "typeVersion": 1.1,
       "position": [
-        1456,
-        784
+        -240,
+        560
       ],
-      "id": "daa7eec0-9def-4879-929c-a61646c38476",
-      "name": "🖼️ Get Image URL",
-      "webhookId": "75d9d093-e731-49bb-9295-5ddbf327f4f3"
+      "id": "f075d669-262e-4d8d-88e8-9cf129c60527",
+      "name": "Download media1",
+      "webhookId": "1824638d-99b0-4cc8-9789-059265ba11e4",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "x45iI27SgqYIc0dv",
+          "name": "WhatsApp account"
+        }
+      }
     },
     {
       "parameters": {
@@ -402,14 +282,17 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        1664,
-        784
+        -32,
+        560
       ],
-      "id": "a7031895-5010-4b8a-be7b-f9ec7b3789fc",
-      "name": "⬇️ Download Image",
-      "retryOnFail": true,
-      "maxTries": 3,
-      "waitBetweenTries": 5000
+      "id": "0d7c1988-6435-4600-842b-6582728eb5f0",
+      "name": "HTTP Request4",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "N6y28QUu9FDLK4ae",
+          "name": "Bearer Auth account"
+        }
+      }
     },
     {
       "parameters": {
@@ -421,25 +304,72 @@
           "mode": "list",
           "cachedResultName": "GPT-4O-MINI"
         },
-        "text": "=Describe this image in detail. Reply in Arabic.\n\nUser question: {{ $('WhatsApp Trigger').item.json.messages[0].image.caption || 'No question provided.' }}",
+        "text": "=Describe what is in this image in detail. Reply in Arabic.\n\nThe user also asked: {{ $('WhatsApp Trigger').item.json.messages[0].image.caption || 'No specific question provided.' }}",
         "inputType": "base64",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 2.1,
       "position": [
-        1888,
-        784
+        160,
+        560
       ],
-      "id": "d7833498-517c-47a9-bdfc-64ceac89352f",
-      "name": "👁️ Analyze Image"
+      "id": "62301a61-52f2-4c7c-bdae-5e61057ff4c3",
+      "name": "Analyze image",
+      "credentials": {}
     },
     {
       "parameters": {
         "assignments": {
           "assignments": [
             {
-              "id": "set-image-msg",
+              "id": "e5e8f375-25a1-465c-a357-a5e3965c1eff",
+              "name": "message",
+              "value": "={{ $json.messages[0].text.body }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        96,
+        0
+      ],
+      "id": "06dbbb49-416c-4f21-b517-d5b5677081f1",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e5e8f375-25a1-465c-a357-a5e3965c1eff",
+              "name": "message",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        368,
+        288
+      ],
+      "id": "7d4cb7b4-cdaa-4683-94d0-de564a7b9ab5",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e5e8f375-25a1-465c-a357-a5e3965c1eff",
               "name": "message",
               "value": "={{ $json['0'].content[0].text }}",
               "type": "string"
@@ -451,68 +381,178 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2112,
-        784
+        416,
+        560
       ],
-      "id": "493068d8-d39d-4781-97cc-c13b88b427e6",
-      "name": "📝 Set Image Description"
+      "id": "8c0596bb-edc6-4bf7-b909-44d442aa78bf",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "use this tool  to check the email of any person if you need to know  the email of him before sending the email",
+        "documentId": {
+          "__rl": true,
+          "value": "1-6H0qZtnDMauZB0R6h9H82K6sAxEHq_o8wRvm0XiVak",
+          "mode": "list",
+          "cachedResultName": "Contacts",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-6H0qZtnDMauZB0R6h9H82K6sAxEHq_o8wRvm0XiVak/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1344258259,
+          "mode": "list",
+          "cachedResultName": "Contacts",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-6H0qZtnDMauZB0R6h9H82K6sAxEHq_o8wRvm0XiVak/edit#gid=1344258259"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        992,
+        512
+      ],
+      "id": "84854a2a-b28f-4df9-b29b-eda3df93ddaa",
+      "name": "Get row(s) in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "d9ejnzqdGVAwqoOz",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
     },
     {
       "parameters": {
         "promptType": "define",
         "text": "={{ $json.message }}",
         "options": {
-          "systemMessage": "=You are a fast-acting WhatsApp AI Assistant.\nYou respond in the same language the user writes in.\n\n## CORE RULE — ACT FIRST, NEVER ASK PERMISSION\nYou MUST take action immediately without asking the user if they want you to do something.\nIf the user asks you to search → search immediately.\nIf the user asks you to send an email → find the contact from googlw sheets and send immediately by Gmail.\nIf the user asks about a price → search immediately without asking.\nNEVER say \"هل تريد أن أبحث؟\" or \"هل تود المتابعة؟\" or any similar phrase.\nNEVER ask for confirmation before using a tool.\n\n## YOUR TOOLS\n\n### 1. SerpAPI Search Tool\n- Use this tool AUTOMATICALLY and IMMEDIATELY whenever:\n  • User asks about prices (أسعار، سعر، بكام، how much)\n  • User asks about current news or recent events in the last 7 days\n  • User asks about product specs or comparisons\n  • User asks any question needing up-to-date information\n- DO NOT ask the user if they want you to search — just search.\n- DO NOT say \"يمكنني مساعدتك في البحث\" — just do it.\n- Search query must be specific: include product name + country + current year.\n\n### 2. Google Sheets Tool\n- Use this to look up email addresses before sending any email.\n- Search by the person's name mentioned by the user.\n- If not found → tell the user the contact was not found and ask for their email.\n\n### 3. Gmail Tool\n- Use this to send emails on behalf of the user.\n- Always look up the email in Google Sheets first.\n- Send the email immediately after finding the contact — do not ask for confirmation.\n\n### 4. Image Analysis\n- When the user sends an image, you receive a detailed description of it.\n- The description is prefixed with [تحليل الصورة].\n- Use this description to answer any question about the image.\n- If the user also asks about a price or specs of what is in the image → search immediately using SerpAPI.\n\n## BEHAVIOR RULES\n- Reply in the same language the user uses (Arabic → Arabic, English → English).\n- Be concise and direct — no unnecessary filler phrases.\n- Never make up email addresses.\n- Never ask \"هل تريد؟\" or \"هل تود؟\" — just execute.\n- If a task requires multiple steps (find email → send) → do all steps automatically.\n\n## EXAMPLES OF CORRECT BEHAVIOR\nUser: \"ابحث عن سعر iPhone 16 في مصر\"\n✅ Correct: [searches immediately and returns results]\n❌ Wrong: \"هل تريد مني البحث عن سعر iPhone 16؟\"\n\nUser: \"إيه اللي في الصورة وكام سعره في مصر؟\"\n✅ Correct: [describes image then searches price immediately]\n❌ Wrong: \"يمكنني مساعدتك في البحث، هل تود المتابعة؟\"\n\nUser: \"ابعت إيميل لأحمد عن الاجتماع\"\n✅ Correct: [looks up Ahmed in Sheets → sends email immediately]\n❌ Wrong: \"هل تريد مني إرسال البريد الإلكتروني؟\"\n\n_if there is an image here is the user question with it to answer it according to the image description:\n{{ $('WhatsApp Trigger').item.json.messages[0].image.caption }}"
+          "systemMessage": "=You are a fast-acting WhatsApp AI Assistant.\nYou respond in the same language the user writes in.\n\n## CORE RULE — ACT FIRST, NEVER ASK PERMISSION\nYou MUST take action immediately without asking the user if they want you to do something.\nIf the user asks you to search → search immediately.\nIf the user asks you to send an email → find the contact from googlw sheets and send immediately by Gmail.\nIf the user asks about a price → search immediately without asking.\nNEVER say \"هل تريد أن أبحث؟\" or \"هل تود المتابعة؟\" or any similar phrase.\nNEVER ask for confirmation before using a tool.\n\n## YOUR TOOLS\n\n### 1. SerpAPI Search Tool\n- Use this tool AUTOMATICALLY and IMMEDIATELY whenever:\n  • User asks about prices (أسعار، سعر، بكام، how much)\n  • User asks about current news or recent events in the last 7 days\n  • User asks about product specs or comparisons\n  • User asks any question needing up-to-date information\n- DO NOT ask the user if they want you to search — just search.\n- DO NOT say \"يمكنني مساعدتك في البحث\" — just do it.\n- Search query must be specific: include product name + country + current year.\n\n### 2. Google Sheets Tool\n- Use this to look up email addresses before sending any email.\n- Search by the person's name mentioned by the user.\n- If not found → tell the user the contact was not found and ask for their email.\n\n### 3. Gmail Tool\n- Use this to send emails on behalf of the user.\n- Always look up the email in Google Sheets first.\n- Send the email immediately after finding the contact — do not ask for confirmation.\n\n### 4. Image Analysis\n- When the user sends an image, you receive a detailed description of it.\n- The description is prefixed with [تحليل الصورة].\n- Use this description to answer any question about the image.\n- If the user also asks about a price or specs of what is in the image → search immediately using SerpAPI.\n\n## BEHAVIOR RULES\n- Reply in the same language the user uses (Arabic → Arabic, English → English).\n- Be concise and direct — no unnecessary filler phrases.\n- Never make up email addresses.\n- Never ask \"هل تريد؟\" or \"هل تود؟\" — just execute.\n- If a task requires multiple steps (find email → send) → do all steps automatically.\n\n## EXAMPLES OF CORRECT BEHAVIOR\nUser: \"ابحث عن سعر iPhone 16 في مصر\"\n✅ Correct: [searches immediately and returns results]\n❌ Wrong: \"هل تريد مني البحث عن سعر iPhone 16؟\"\n\nUser: \"إيه اللي في الصورة وكام سعره في مصر؟\"\n✅ Correct: [describes image then searches price immediately]\n❌ Wrong: \"يمكنني مساعدتك في البحث، هل تود المتابعة؟\"\n\nUser: \"ابعت إيميل لأحمد عن الاجتماع\"\n✅ Correct: [looks up Ahmed in Sheets → sends email immediately]\n❌ Wrong: \"هل تريد مني إرسال البريد الإلكتروني؟\"\n\n_if there is an image here is the user question with it to answer it according to the image description:\n{{ $('WhatsApp Trigger').item.json.messages[0].image.caption }}",
+          "maxIterations": 15
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        2432,
-        400
+        720,
+        144
       ],
-      "id": "d42c5cc9-9507-4681-afd3-45acb4e1d03b",
-      "name": "🧠 AI Agent"
+      "id": "fe7a3a5b-3d70-490c-9f26-d66ff494bb77",
+      "name": "AI Agent1"
     },
     {
       "parameters": {
-        "model": {
-          "__rl": true,
-          "mode": "list",
-          "value": "gpt-4o-mini"
-        },
-        "builtInTools": {},
-        "options": {}
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', `use this tool to send messages`, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {
+          "appendAttribution": false
+        }
       },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.3,
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
       "position": [
-        2352,
-        624
+        896,
+        672
       ],
-      "id": "d3c1422d-0fb7-4c20-a040-e32874217328",
-      "name": "🤖 LLM (GPT-4o-mini)",
+      "id": "aaeb9eb2-e527-462f-a61d-fb1bd63d1a6f",
+      "name": "Send a message in Gmail",
+      "webhookId": "26efd8cf-765a-4523-9e87-c31948987e57",
       "credentials": {
-        "openAiApi": {
-          "id": "YShXMKvUwjkLxa25",
-          "name": "n8n free OpenAI API credits"
+        "gmailOAuth2": {
+          "id": "ZtP1IhFrU3VFshDD",
+          "name": "Gmail OAuth2 API"
         }
       }
     },
     {
       "parameters": {
-        "sessionIdType": "customKey",
-        "sessionKey": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}",
-        "contextWindowLength": 10
+        "content": "## Text\n",
+        "height": 144
       },
-      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
-      "typeVersion": 1.3,
+      "type": "n8n-nodes-base.stickyNote",
       "position": [
-        2512,
-        624
+        0,
+        0
       ],
-      "id": "a0ae6714-2e07-495f-8e33-e31d09b7b7d4",
-      "name": "🧠 Conversation Memory"
+      "typeVersion": 1,
+      "id": "6cd45584-458f-4bb2-9275-8a330c7d3747",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## voice",
+        "height": 192,
+        "width": 816
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -288,
+        240
+      ],
+      "typeVersion": 1,
+      "id": "4682f0b3-2cd7-4ed7-a398-130e968b74e2",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "  ##                                 Image\n",
+        "height": 224,
+        "width": 880
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -304,
+        496
+      ],
+      "typeVersion": 1,
+      "id": "eec2f22d-d2d8-40e2-b836-488481ad7ba9",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "f0797766-4a37-4a2a-bc55-50d8909aff61",
+              "leftValue": "={{ $json.messages[0].from }}",
+              "rightValue": "={{ $vars.phone }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -768,
+        208
+      ],
+      "id": "18bbd332-1782-4637-8d02-cf96c3a8b6a7",
+      "name": "If"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -672,
+        400
+      ],
+      "id": "fc7b4256-d01b-4048-9ccd-4baf332c97bd",
+      "name": "No Operation, do nothing"
     },
     {
       "parameters": {
@@ -521,11 +561,11 @@
       "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
       "typeVersion": 1,
       "position": [
-        2800,
-        704
+        1152,
+        416
       ],
-      "id": "d9752eb8-0fab-47a5-aad0-3ce3d9220b89",
-      "name": "🔍 SerpAPI Search",
+      "id": "448f950f-6213-41dd-9b8e-b6199ef9bd88",
+      "name": "SerpAPI",
       "credentials": {
         "serpApi": {
           "id": "7Hhz3W7MrDnam6VW",
@@ -535,65 +575,37 @@
     },
     {
       "parameters": {
-        "descriptionType": "manual",
-        "toolDescription": "Look up a contact's email address by their name before sending any email.",
-        "documentId": {
-          "__rl": true,
-          "value": "REPLACE_WITH_SPREADSHEET_ID",
-          "mode": "id"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "Contacts",
-          "mode": "name"
-        },
-        "options": {}
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}"
       },
-      "type": "n8n-nodes-base.googleSheetsTool",
-      "typeVersion": 4.7,
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
       "position": [
-        2688,
-        800
-      ],
-      "id": "b8ed6bf5-e60d-47e6-ab35-75ad45da05d7",
-      "name": "📊 Google Sheets Lookup"
-    },
-    {
-      "parameters": {
-        "sendTo": "={{ $fromAI('To', 'recipient email address', 'string') }}",
-        "subject": "={{ $fromAI('Subject', 'email subject line', 'string') }}",
-        "message": "={{ $fromAI('Message', 'email body content', 'string') }}",
-        "options": {
-          "appendAttribution": false
-        }
-      },
-      "type": "n8n-nodes-base.gmailTool",
-      "typeVersion": 2.2,
-      "position": [
-        2624,
-        944
-      ],
-      "id": "4d04df6c-d81c-42f8-9499-f2b804140367",
-      "name": "📧 Gmail Send",
-      "webhookId": "d3f48e08-90d2-45b3-bbe2-a72a4a225773"
-    },
-    {
-      "parameters": {
-        "operation": "send",
-        "phoneNumberId": "REPLACE_WITH_PHONE_NUMBER_ID",
-        "recipientPhoneNumber": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}",
-        "textBody": "={{ $json.output }}",
-        "additionalFields": {}
-      },
-      "type": "n8n-nodes-base.whatsApp",
-      "typeVersion": 1.1,
-      "position": [
-        2704,
+        784,
         400
       ],
-      "id": "09939202-9ee9-421a-bc7e-c686b7f086d4",
-      "name": "📤 Send WhatsApp Reply",
-      "webhookId": "5e0cb616-88e8-45ea-ac57-ae1ad89bd962"
+      "id": "167a2e38-6da5-4c5d-a092-0f36ec046d2f",
+      "name": "Simple Memory1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        656,
+        640
+      ],
+      "id": "be3190e8-efca-4be3-9ced-c04bae1ca261",
+      "name": "OpenAI Chat Model",
+      "credentials": {}
     }
   ],
   "connections": {
@@ -601,216 +613,216 @@
       "main": [
         [
           {
-            "node": "🔒 Security Check",
+            "node": "If",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "🔒 Security Check": {
+    "Switch": {
       "main": [
         [
           {
-            "node": "🔀 Message Router",
+            "node": "Edit Fields",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "⛔ Unauthorized",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "🔀 Message Router": {
-      "main": [
-        [
-          {
-            "node": "📝 Set Text Message",
+            "node": "Download media",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "🎤 Get Audio URL",
+            "node": "Download media1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download media": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download media1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request4": {
+      "main": [
+        [
+          {
+            "node": "Analyze image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze image": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Send message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Switch",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "🖼️ Get Image URL",
+            "node": "No Operation, do nothing",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "📝 Set Text Message": {
-      "main": [
+    "SerpAPI": {
+      "ai_tool": [
         [
           {
-            "node": "🧠 AI Agent",
-            "type": "main",
+            "node": "AI Agent1",
+            "type": "ai_tool",
             "index": 0
           }
         ]
       ]
     },
-    "🎤 Get Audio URL": {
-      "main": [
-        [
-          {
-            "node": "⬇️ Download Audio",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "⬇️ Download Audio": {
-      "main": [
-        [
-          {
-            "node": "🎙️ Groq Whisper STT",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "🎙️ Groq Whisper STT": {
-      "main": [
-        [
-          {
-            "node": "📝 Set Voice→Text",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "📝 Set Voice→Text": {
-      "main": [
-        [
-          {
-            "node": "🧠 AI Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "🖼️ Get Image URL": {
-      "main": [
-        [
-          {
-            "node": "⬇️ Download Image",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "⬇️ Download Image": {
-      "main": [
-        [
-          {
-            "node": "👁️ Analyze Image",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "👁️ Analyze Image": {
-      "main": [
-        [
-          {
-            "node": "📝 Set Image Description",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "📝 Set Image Description": {
-      "main": [
-        [
-          {
-            "node": "🧠 AI Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "🧠 AI Agent": {
-      "main": [
-        [
-          {
-            "node": "📤 Send WhatsApp Reply",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "🤖 LLM (GPT-4o-mini)": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "🧠 AI Agent",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "🧠 Conversation Memory": {
+    "Simple Memory1": {
       "ai_memory": [
         [
           {
-            "node": "🧠 AI Agent",
+            "node": "AI Agent1",
             "type": "ai_memory",
             "index": 0
           }
         ]
       ]
     },
-    "🔍 SerpAPI Search": {
-      "ai_tool": [
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
         [
           {
-            "node": "🧠 AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "📊 Google Sheets Lookup": {
-      "ai_tool": [
-        [
-          {
-            "node": "🧠 AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "📧 Gmail Send": {
-      "ai_tool": [
-        [
-          {
-            "node": "🧠 AI Agent",
-            "type": "ai_tool",
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
             "index": 0
           }
         ]
@@ -819,6 +831,7 @@
   },
   "pinData": {},
   "meta": {
+    "templateCredsSetupCompleted": true,
     "instanceId": "c373301d3a3102ac8fe7a1e37334930d215639ab03d320e702696229ca1d342f"
   }
 }
